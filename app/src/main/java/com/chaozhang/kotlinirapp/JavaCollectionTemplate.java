@@ -4,7 +4,7 @@ import androidx.annotation.Nullable;
 
 import java.util.List;
 
-public class JavaCollectionTemplate<E extends JavaDataTemplate<E>> {
+public class JavaCollectionTemplate<E> {
 
     @Nullable
     public final List<E> elements;

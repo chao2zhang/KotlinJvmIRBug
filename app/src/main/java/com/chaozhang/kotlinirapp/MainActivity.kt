@@ -14,12 +14,14 @@ class MainActivity : AppCompatActivity() {
         Log.e("MainActivity", fetchCards().toString())
     }
 
-    private fun fetchCards(): LiveData<Resource<List<Card>?>> {
+    private fun fetchCards(): LiveData<List<Card>> {
         val cards = MutableLiveData(Resource(JavaCollectionTemplate(listOf(Card()))))
         return Transformations.map(cards) { resource ->
-            Resource.map(resource, resource?.data?.elements)
+            resource?.data?.elements
         }
     }
 }
 
-private class Card : JavaDataTemplate<Card>
+class Resource<out T>(@JvmField val data: T?)
+
+private class Card
