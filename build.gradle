@@ -1,26 +1,46 @@
-// Top-level build file where you can add configuration options common to all sub-projects/modules.
-buildscript {
-    ext.kotlin_version = "1.4.30"
-    repositories {
-        google()
-        jcenter()
-    }
-    dependencies {
-        classpath "com.android.tools.build:gradle:4.1.2"
-        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
-
-        // NOTE: Do not place your application dependencies here; they belong
-        // in the individual module build.gradle files
-    }
+plugins {
+    id "application"
+    id "org.jetbrains.kotlin.jvm" version "1.4.30"
 }
 
-allprojects {
-    repositories {
-        google()
-        jcenter()
-    }
+repositories {
+    google()
+    mavenCentral()
 }
 
-task clean(type: Delete) {
-    delete rootProject.buildDir
+dependencies {
+    implementation "org.jetbrains.kotlin:kotlin-stdlib:1.4.30"
+    implementation 'androidx.annotation:annotation:1.1.0'
+}
+
+compileKotlin {
+    kotlinOptions.useIR = true
+//> Task :run FAILED
+//Exception in thread "main" java.lang.VerifyError: Bad type on operand stack
+//Exception Details:
+//  Location:
+//    com/chaozhang/kotlinirapp/MainKt$fetchCards$1.apply(Lcom/chaozhang/kotlinirapp/Resource;)Ljava/util/List; @24: getfield
+//  Reason:
+//    Type 'java/lang/Object' (current frame, stack[0]) is not assignable to 'com/chaozhang/kotlinirapp/JavaCollectionTemplate'
+//  Current Frame:
+//    bci: @24
+//    flags: { }
+//    locals: { 'com/chaozhang/kotlinirapp/MainKt$fetchCards$1', 'com/chaozhang/kotlinirapp/Resource', 'com/chaozhang/kotlinirapp/Resource', 'java/lang/Object' }
+//    stack: { 'java/lang/Object' }
+//  Bytecode:
+//    0000000: 2b4d 2cc7 0007 01a7 0014 2cb4 0016 4e2d
+//    0000010: c700 0701 a700 072d b400 1cb0
+//  Stackmap Table:
+//    append_frame(@10,Object[#18])
+//    append_frame(@23,Object[#5])
+//    full_frame(@27,{Object[#2],Object[#18],Object[#18]},{Object[#32]})
+//
+//        at com.chaozhang.kotlinirapp.MainKt.fetchCards(Main.kt:9)
+//        at com.chaozhang.kotlinirapp.MainKt.main(Main.kt:4)
+//
+//FAILURE: Build failed with an exception.
+}
+
+application {
+    mainClass = 'com.chaozhang.kotlinirapp.MainKt'
 }
